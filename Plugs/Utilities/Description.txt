@@ -1,0 +1,281 @@
+
+All source code pertaining to this plug-in architecture is copyright(c) 2001
+Shawn Bullock.  Author reserves all rights and is granting you limited use
+to use for educational purposes.  You may only redistribute this in its
+entirety and without modification unless you include a copy of the original
+work with this notice.  You may not profit or resell this source code.
+
+Portions of this source code is copyright by Steve McMahon
+www.vbaccellerator.com. and is subject to the terms and conditions set forth
+by him.
+
+All source code is provided as-is and without warranty of any kind, implied
+or not.  Author is not responsible for any damage created by it or misuse of
+source code and functionality intended by the author or not.
+
+
+I believe this source code to provide an meaningful example of how to
+accomplish this kind of task.  You'll notice it's not complete.  I do that
+on purpose.  If you want the complete source code and a few real-world
+examples of how this is implemented, including some helps to help integrate
+this a functionality in Visual Basic so that you can create a new app for
+plugs, and plugs for the apps, then send me an email leabre@hotmail.com
+or if there's enough votes, I'll post some more goodies.  You would not
+believe some things I can do, like distributed plugs and dynamically
+managed plugs (new concepts).  I have not included the source for that
+functoinality in this, but if there's demand, I'll release a much more
+complete example and a few real implementations.
+
+
+
+Plug-in Architecture v1.0
+-------------------------
+
+   History:
+   --------
+
+      In mid-1999 I began consulting for the LA Sherriff and various other
+      police departments.  They wanted each of their application's to support
+      modules.  I searched the Internet and was not able to find any examples
+      of how to create a plug-in architecture with Visual Basic.
+
+      Being an excellent programmer, seasoned in many languages and well
+      seasoned in COM, I began to tinker with different ways to create the
+      effect of a plug-in enabled application.  The first implementation was
+      a simple Object in the host application with a object in the plug-in. It
+      worked quite well, though very crude.
+
+      Over time, I performed more and more research and fine-tuned the ways in
+      which I implemented this feature.  Eventually, I had to start using
+      object models for the host application.  Then I learned some more tricks.
+      Not too long ago, about 4 months ago, I had the need to implement a
+      module manager.  At first, it was contained within the host application
+      but then I quickly realized that it was not reusable.
+
+      I then began to implement interfaces and created a utility DLL that
+      would eventually contain all the interfaces and some shared functions
+      that the host and plug-in need to share, such as constants and such.  I
+      later moved the module management functions into the DLL and came up
+      with a way that allowed the plug-ins to be activated and deactivated
+      during run-time.  I also provided a way to specify whether the plug-in
+      loads automatically at startup or not.
+
+      It sounds like a simple thing to do, but took lots of tweaking.  The end
+      result is very well-rounded source code, not so well documented, but
+      truly textbook style source of about 1500 lines that manages plug-ins and
+      helps the host.  It's reusable so you can reference the utility DLL from
+      any application.  The plug-ins need to adhere to a certain set of
+      interfaces and a few rules.  In all, with less than 20 lines of code for
+      the application and less than 50 lines of code for each plug-in, a truly
+      complete plug-in archicture can be achieved.
+
+      Currently, the main application has to be an ActiveX EXE in order for
+      the plug-ins to have intellisense during design-time.  Also, because the
+      host application will need an events class, it must be an ActiveX EXE.
+      While designing the entire example, I needed to have them in the same
+      project group.  For that reason, the plug-ins used the application in
+      late-bound mode, but by the time you recieve it, I will have already
+      changed that and each application or dll must be in a seperate IDE
+      instance to function properly.  I will include the project group for
+      your convenience so you can see how to do it and work with it.  I will
+      update this soon so you can specify in the DLL whether you use late or
+      early binding for the Host application.  There are advantages, with late
+      binding, you can use the same plug-in for many applications or even
+      legacy applications that weren't meant to have a plug-in architecture in
+      the first place.
+
+      In addition, there is a settings manager that allows the application
+      and the plug-in to add settings to a tree and when you click on a node,
+      an event is raised that both the host application and the plug-in will
+      recieve to determine if it needs to add a settings screen to the main
+      display.  This will allow you to do configurations. The Settings screen
+      displayed is a seperate form per setting in both the Host and the Module
+      but will become a child of the Settings Manager when used.  This allows
+      for seamless integration of the preferences screen.
+
+      I hope you find this useful.  There may be some errors, or some not yet
+      implemented functionality.  I have spend over 200 hours perfecting this
+      source code over the past 4 months and is the end result of 2 years of
+      research on this particular topic.
+
+
+   Terminology:
+   ------------
+
+      Host Application:
+
+         The main application that will use the plug-ins.  The host must be
+         an ActiveX EXE.
+
+      Plug-in:
+
+         A DLL, EXE, or PLC that will be instanciated by the Host Application
+         in order to add functionality.  Currently, only the DLL functionality
+         is provided.
+
+      PLC:
+
+         A PLC is a INI file that tell the module manager how
+         to register the DLL in the case that the main object is not a
+         [ProjectName].Main convention.
+
+      PlugUtilities:
+
+         The DLL that contains all the functionality for managing plug-ins and
+         contians the Plugins object model, and the Settings manager.  The
+         object model is as follows:
+
+         Plugins
+          +- Plugin
+         Settings
+
+         And will be used like:
+
+         Application
+          |
+          +- Plugins
+          |   |
+          |   +- Plugin
+          |
+          +- Settings
+
+          when used by the application.  Each plugin will recieve a pointer to
+          the Application object by the host and will traverse to the Settings
+          and the Plugins objects to perform some tasks.
+
+       Module Manager:
+
+         This is the screen that allows you to add/remove modules and specify
+         if they are to be loaded when the application loads and to active or
+         deactive them during runtime.  This module contains all the logic
+         that manages the plug-ins and mostly works behing the scenes.
+
+      Settings Manager:
+
+         This is the screen that manages the settings for the plug-ins.  This
+         feature was originally intended to act as a universal configuration
+         screen for all the plug-ins, however, has been expanded to add some
+         functionality to the Host application as well.  The host may use this
+         screen to provide a user-configurable preferences as well.  After
+         adding a node and group, the plug-in or host application need only
+         recieve an event to do as necessary.
+
+      Module Registration:
+
+         The Modules will be registered in the Registry.  For this reason, a
+         few simple rules must be followed.  The application name must be set
+         for the application project, then in the registry, the keys will be
+         as follows:
+
+         /HKEY_LOCAL_MACHINE/Software/[Application Name]/Modules/[Module Name]
+          /[Settings]
+
+      Module Folder:
+
+         The Modules Folder (Should) be located in the [Application]\Modules
+         directory.  By default, the module manager will look there when you
+         add a new module, however, you can locate the module wherever you
+         like.  This is only a convenience factor.
+
+
+   Getting Started:
+   ----------------
+
+      Great pains have been taken to make sure this is as easy as possible to
+      use.  As such, for each new application, you need not make any changes
+      to the source code of the PluginUtilities DLL.  There is a PlugTest
+      plug-in that has no functionality, yet, demonstrates how to use the
+      functionality.  When creating a new plug-in, you may want to use this
+      as a template making only the chages where necessary.  The only changes
+      I can think of is to add a reference for you're Host Application and
+      removing the events that you won't be using, and changing the string
+      references for PlugTest to whatever you wish for you're project.
+
+      1.    Compile PlugUtilities.DLL.
+      2.    Compile Dynamic_Word.EXE
+      3.    Compile each plug-in as necessary to the Modules folder.
+      4.    Start the application
+      5.    Goto the Modules Manager
+      6.    Select the plug-ins DLL's and Add them.
+
+            This only works when using the compiled version of the EXE and
+            Utility DLL.  If you have them in the project group, you cannot
+            add a new module because the CLSID doesn't match.  However, if
+            you added it already, you can run the plugs from the group if
+            you need to.
+
+      7.    Experiment with activating and deactivating the plugs and the
+            settings.
+      8.    Have fun.
+
+      There is a sound process to using the plug-ins.  The first thing that
+      must happen is for the plug-in to be Registered.  This means that the
+      module manager must use the plug-ins regstration information and add
+      it to the appropriate registry keys.  Each plug-in must support it's
+      own registration information or it cannot be used.
+
+      Once the plug-in is registered, it will be Loaded.  A module can be
+      loaded at time of registration, or when the host application starts.
+      The only thing a Loaded module does is add it's self to the list of
+      modules in the module manager.  There is not active functionality at
+      this point.  There is status feedback, if the module has an error or
+      fails to load, you'll see that module in RED in the module manager
+      screen listed with a description of the problem.  To correct it, you
+      will need to dig through the source code and see what's happening.
+
+      You may get a BAD_VERSION error.  This only mean that you are trying
+      to use a compiled module that is not in the project group.  If you put
+      the source code for the module in the group, that problem should be
+      corrected.
+
+      When a module is loaded, it can then be Activated.  A plug-in may be
+      activated during application initialization automatically, or it may
+      be activated manually during run-time if not currently active.  When
+      a module activates, it recieves a pointer to the Host Application, the
+      events classes for the Host and the Utility Events, and the Plugins
+      object from the Utility Class.  Then, it may add some settings nodes
+      to the settings manager, or modify the appearance of the Host in some
+      way, or both, or none at all.  This may include adding a menu item,
+      a toolbar item, or something.
+
+      It's possible that no visual alteration takes place.  This may be true
+      if the plug-in only performs an action while the program is exiting.
+      Perhaps it's an autosave feature.
+
+      The module may be deactivated manually, or automatically when the host
+      exits.  When a module deactivates, it releives it's pointers to the host
+      and utilities, and then removes itself from the settings screen (if
+      necessary) and from the user interface of the host.  If it did not make
+      a change to the UI, then it will no longer recieve events, however, will
+      sill be listed in the module manager.
+
+      What functionality the plug-in provides, is up to the programmer.  There
+      are few rules that must be adhered to, but again, just a few.  If any
+      of these are broken, it won't work.
+
+      The accompanying Dynamic_Word application is not a featuresome project.
+      It is a skeleton project to be used as a template, and to demonstrate
+      what how to make this work.  Obviously, some changes will be made.  If
+      you want, request of me, and I"ll create a VB Plugin Application project
+      and a Plug-in project you can place in your Templates folder and you
+      can create new projects based on those.  Personally, I would rather you
+      figure out how to do it so you can learn how to use this powerful frame
+      work.
+
+      When a node is selected in the Settings Manager, the Key of the node
+      is passed in the event that will be used to identify what node was
+      selected.  Therefore, you must know what keys are what.  That's simple,
+      just look at how the PlugTest project does it.  Look also at the
+      AddModule method of the Settings class.
+
+      The application must have the PluginConstants included in the project
+      referenced from the location it exists in the Common directory.
+
+      The width of a Settings Screen must be 6135 and the Height must be
+      4395.  The frame that will contain it is precicely set.  The form
+      must also be no border, and visible = False.
+
+      If you have any questions, you may contact me at: leabre@hotmail.com
+
+      Thanks,
+      Shawn Bullock (Research and Development Programmer for unnamed company)

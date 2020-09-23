@@ -1,0 +1,47 @@
+Type=OleDll
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\WINNT\System32\stdole2.tlb#OLE Automation
+Reference=*\G{9981EB20-9DB2-41C5-B4B0-BC5962E000CD}#3.0#0#..\..\App Folder\Common Files\PlugUtilities.dll#PlugUtilities
+Reference=*\G{D955725F-FC2F-49ED-B0BE-5914CD43B7C9}#6.0#0#..\..\App Folder\Dynamic_Word.exe#Dynamic_Word
+Class=Main; Main.cls
+Module=basMain; basMain.bas
+Form=frmConfig.frm
+Form=frmFind.frm
+Startup="(None)"
+HelpFile=""
+Title="Find"
+ExeName32="dwPlugFind.dll"
+Path32="..\..\App Folder\Modules"
+Command32=""
+Name="dwPlugFind"
+HelpContextID="0"
+CompatibleMode="0"
+CompatibleEXE32="..\..\Modules\dwPlugFind.dll"
+MajorVer=1
+MinorVer=0
+RevisionVer=57
+AutoIncrementVer=1
+ServerSupportFiles=0
+VersionCompanyName="Earle M. Jorgensen"
+CompilationType=0
+OptimizationType=0
+FavorPentiumPro(tm)=0
+CodeViewDebugInfo=0
+NoAliasing=0
+BoundsCheck=0
+OverflowCheck=0
+FlPointCheck=0
+FDIVCheck=0
+UnroundedFP=0
+StartMode=1
+Unattended=0
+Retained=0
+ThreadPerObject=0
+MaxNumberOfThreads=1
+ThreadingModel=1
+DebugStartupOption=0
+
+[MS Transaction Server]
+AutoRefresh=1
+
+[RVB]
+DeleteClass1=Events

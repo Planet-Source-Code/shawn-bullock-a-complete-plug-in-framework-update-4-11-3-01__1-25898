@@ -1,0 +1,130 @@
+How to install:
+---------------
+
+   There are three parts to this framework.  However, there is one primary
+   component.  All three work together to make the framework harmonize and
+   without any of the three, the framework does not function.
+
+   * Plugin Utilities Library
+   * Host Appliaction
+   * Plug-in Module
+
+
+   Plugin Utilities Library
+
+      This is Visual Basic DLL that contains all the necessary logic to
+      manage the modules.  This is the framework itself, prettey much.  It
+      is written in such a way as to be application-independant and plug-in
+      independant.  This means that the library knows nothing about the
+      application or the plug-ins except through the prescribed interfaces.
+
+      This is good, because it means you can reuse the framework in as many
+      applications as you choose.  Because the library needs certain info
+      that will be specific to each appliaction, the module registries will
+      not be confused, either.
+
+   Host Application
+
+      This would be your Visual Basic application which contains the plug-in
+      framework.  It must have a references to the PluginUtilities Library
+      and must contain an object model of at least the the Application object
+      which you must define.
+
+      The application must expose the Plugin Utilities objects: Plugins, and
+      Settings.
+
+      Thus:
+
+      Application
+       |
+       +- Plugins
+       |   |
+       |   +- Plugin
+       |
+       +- Settings
+
+      The host application must also have a way to invoke the Module Manager
+      from the Utilities library, and the Settings Manager, as well.  This
+      is up to you how you want to do it.
+
+   Plug-in Module
+
+      This is the module itself.  This will receive events from the application
+      and act upon them accordingly.  How it hooks into the Host Application
+      is up to you.  You're plugin will be early bound to the application's
+      type library and you must provide a way to integrate it into the menus
+      or the toolbars or whatever.  That is done through the Application
+      Object Model and will be different for every application.  In that
+      respect, the plug-in framework is reusable.
+
+
+   To Install:
+
+      * For all projects, make sure binary compatibility is set to "None"
+
+      * Compile the PlugUtilities Project
+
+      * Set Binary Compatibility
+
+      * Compile the PlugUtilities Project One more time
+
+      * Open the Dynamic Word Application
+
+      * Set a reference to PlugUtilities
+
+      * Compile Dyname Word Application.  (You may want to set bibary
+        compatibility because the plug-ins will need it.  If you are going
+        to develop your own application, keep project compatibility, just
+        remember to recompile the plug-ins each time you make a change or
+        they won't activate.  They'll give you a "Bad Version" message in
+        the Module Manager).
+
+      * For Each Plug-in Module: Reference the PlugUtilities Library and
+        the Host Application (which should be an ActiveX EXE) and then
+        compile.  You should compile the plug-ins into the Modules Folder.
+        This is because when you add a module, it will default to the
+        Modules folder, otherwise you'll have to browse to locate the
+        plugin DLL's.
+
+      * Execute the Host Application from the Explorer (Not Visual Basic
+        IDE).
+
+      * At this point, the Modules aren't registered.  Got to the Module
+        Manager.
+
+      * Click the "..." Button
+
+      * Locate the Plug-in you want to register (DLL).
+
+      * Click "Add" in the Module Manager.  It should appear in the list.
+
+      * If you want the module to start with the application, select it
+        and make sure the "Startup" option is checked (in the lower
+        right corner).
+
+      * If you want it to be active in the host application, check the
+        checkbox in the list.
+
+
+   Basically, the Utilities project should be compiled.  The host application
+   must reference it.  The plug-ins must reference both the utilities project
+   and the application.
+
+   If you run the Group that contains the Application and Utilities project,
+   the plug-ins may not activate.  To correct this, the binary compatibility
+   must be set for each project in the group.  If it breaks compatibility when
+   you set it, then you'll have to compile the projects with binary
+   compatibility set, and then recompile each module with references to the
+   projects.
+
+   If you have problems settings version compatibility with The application, set
+   it to project compatibility and then compile the plugs-against it.
+
+
+   If you have problems or questions please email me at:
+
+      leabre@hotmail.com
+
+
+   Thanks,
+   Shawn Bullock

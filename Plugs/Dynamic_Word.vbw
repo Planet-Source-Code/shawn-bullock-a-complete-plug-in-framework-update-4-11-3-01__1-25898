@@ -1,0 +1,9 @@
+Application = 0, 0, 821, 646, C
+basMain = 0, 0, 821, 644, C
+frmMain = 0, 0, 821, 645, CI, 0, 0, 661, 502, C
+frmMainConfig = 0, 0, 820, 642, C, 0, 0, 449, 354, C
+Events = 0, 0, 821, 643, C
+basPluginConstants = 0, 0, 821, 639, C
+ActiveDocument = 0, 0, 821, 643, C
+frmAbout = 0, 0, 821, 644, C, 0, 0, 447, 354, C
+basCommon = 0, 0, 821, 647, C

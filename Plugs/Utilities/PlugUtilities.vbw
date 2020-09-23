@@ -1,0 +1,16 @@
+IPlugin = 0, 0, 821, 642, C
+IPluginVersion = 0, 0, 821, 643, C
+Registry = 0, 0, 821, 642, C
+basMain = 0, 0, 821, 640, C
+IPluginHook = 0, 0, 821, 641, C
+Plugins = 0, 0, 821, 643, 
+Plugin = 0, 0, 821, 642, CI
+frmModuleManager = 0, 0, 821, 642, I, 0, 0, 629, 368, C
+basCommon = 0, 0, 821, 641, C
+IModuleManager = 0, 0, 821, 643, C
+basPluginConstants = 0, 0, 821, 642, C
+IPluginRegister = 0, 0, 821, 643, C
+Settings = 0, 0, 821, 641, C
+frmSettings = 0, 0, 821, 645, C, 0, 0, 709, 411, C
+UtilityEvents = 0, 0, 821, 645, C
+basAPI = 0, 0, 821, 641, C
