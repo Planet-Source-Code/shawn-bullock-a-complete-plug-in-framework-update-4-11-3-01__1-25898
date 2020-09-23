@@ -1,0 +1,124 @@
+Update 4 (11/3/2001)
+--------
+
+   * Fixed the delete.  Now, when you delete a plugin, it'll remove it's
+     reference from the registry and will no more show in the manager
+     window.  In addition, it'll automatically unregister the DLL.
+
+   * Be sure to compile the EXE into the App Folder.  The Utility DLL into
+     App Folder\Common and the plugs into App Folder\Modules
+
+
+Update 3 (8/11/2001)
+--------
+
+   * Implemented the IModuleManager_Status property in the Module Manager
+     form.  Previously, it wasn't implemented.  However, the framework does
+     not use it internally.  It's there for other plugins, the object model,
+     or scripting to use.  It will return the value of the current status
+     of the module in question.  Previously, it did not return a valid value
+
+   * Corrected to Module Registration facility.  Now, when you add a module]
+     that is not located in the default \Modules\ directory it will not give
+     an error.  Previously, it would give an error.  However, modules located
+     in the Modules directory were uneffected by this defect
+
+   * Added the Open, Save, and Save As events to the application.  Added all
+     functionality accordingly.
+
+   * Added the DocPath and Changed properties to ActiveDocument.
+
+   * Added some new constants.
+
+   * Added a new plugin example, Autosave.  This plug in was based on the
+     template that is provided and then modified to act as a functional
+     module.  First you set the minutes, and then on each minute count the
+     AutoSave module will automatically save the document.  If the document
+     has not been saved or loaded from an existing, then you'll be prompted
+     to save as.
+
+   * Host Application Template has been updated.  If you use them, please be
+     sure to update the references and then copy them into the VB/Projects/
+     Templates directory.
+
+   > Be sure to recompile your PlugUtilities and Dynamic_Word and all other
+     modules once you recieve this.  Update the references if needed.
+
+
+
+Update 2 (8/7/2001)
+--------
+
+   * Corrected a defect that would prevent the application from starting when
+     no plug-in has been registered yet
+
+   * Made some effiency enhancements
+
+   * When a group or module group is added to the settings manager, a default
+     events is now sent "About:[GroupName]" that allows you to display an
+     about box in the setting manager
+
+   * Added about boxes to the settings screen for the test application and the
+     plug-ins
+
+   * Created three templates to place in the VB\Templates directory
+
+     > Copy the HostApplication Project File and the Folder, and also the
+       PluginModule VB Project and Folder to the ...VB98\Templates\Projects\
+       folder.  These are located in the Plugs\Templates directory
+
+     > Copy the PluginSettings.frx and .frm files into the VB98\Templates\Forms
+       directory
+
+     > By doing this, when you select Add->Form in the VB IDE, you can select
+       the PluginSettings form and you will automatically be compliant with the
+       settings manager.  Certain dimensions of the form are required for the
+       setting to be displayed correctly
+
+     > By doing this, when you create a new project in VB, you will have two
+       new project types: HostApplication and PluginModule, respectively.
+       When you choose a new HostApplication, you already have a absolutely
+       minimum skeleton of a working application that incorporates the plugin
+       framework.  This includes the minimum object modle required.  All you
+       have to do is change the project name and compile.  Of course, you'll
+       also have to add your own features, as well.  This should make it
+       easier for you to get started creating your own application
+
+       When you choose PluginModule project, you get a functional plugin that
+       is ready to be connected to a host.  You must set a reference to the
+       HostApplication and then you must set the Events object to the Host
+       name.Events and then you must uncomment the two lines that set the
+       event.  After that, compile and from in the Host, add the module and
+       you're ready to go
+
+     > If you chage the GUID of the PlugUtilities.DLL, you have to update this
+       project template, also or the change won't take effect when you create
+       a new HostApplication.  I recommend you make all your changes to the
+       templates in the \Plugs\Templates directory first, then copy the
+       changes to the VB Templates folders later.  That is the safest way to
+       do so.  This also applies if you chaged the GUID of the Host, so that
+       the plug will have fresh references to the current Host and Utility
+
+
+
+
+Update 1 (8/6/2001)
+--------
+
+   * Made the plugins early bound
+
+   * Updated the dwPlugFind to actually function as a find utility
+
+   * Added the ActiveDocuments class to the application object model
+
+   * Implemented a config screen in the dwPlugFind module to demonstrate
+     how the settings manager works
+
+   * Other enhancements
+
+
+
+Release (8/6/2001)
+-------
+
+Release date.
